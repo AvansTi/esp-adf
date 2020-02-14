@@ -29,7 +29,9 @@
 
 static const char *TAG = "HTTP_LIVINGSTREAM_EXAMPLE";
 
+// https://hendrikjansen.nl/henk/streaming.html
 #define mp3_STREAM_URI "https://icecast.omroep.nl/3fm-serioustalent-mp3"
+//#define mp3_STREAM_URI "http://as192.pinguinradio.com"
 
 int _http_stream_event_handle(http_stream_event_msg_t *msg)
 {
@@ -104,6 +106,10 @@ void app_main(void)
         .ssid = CONFIG_WIFI_SSID,
         .password = CONFIG_WIFI_PASSWORD,
     };
+	if (strlen(CONFIG_WIFI_IDENTITY) > 0)
+		wifi_cfg.identity = strdup(CONFIG_WIFI_IDENTITY);
+
+
     esp_periph_handle_t wifi_handle = periph_wifi_init(&wifi_cfg);
     esp_periph_start(set, wifi_handle);
     periph_wifi_wait_for_connected(wifi_handle, portMAX_DELAY);
